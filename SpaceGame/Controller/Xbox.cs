@@ -9,12 +9,13 @@ namespace SpaceGame.Controller
 	/// <summary>
 	/// This is the main type for your game.
 	/// </summary>
-	public class Game1 : Game
+	public class Xbox : Game
 	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
+		Player player;
 
-		public Game1()
+		public Xbox()
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
@@ -28,7 +29,7 @@ namespace SpaceGame.Controller
 		/// </summary>
 		protected override void Initialize()
 		{
-			// TODO: Add your initialization logic here
+			player = new Player();
 
 			base.Initialize();
 		}
@@ -41,8 +42,8 @@ namespace SpaceGame.Controller
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-
-			//TODO: use this.Content to load your game content here 
+      		Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
+			player.Initialize(Content.Load<Texture2D>("player"), playerPosition);
 		}
 
 		/// <summary>
@@ -71,8 +72,9 @@ namespace SpaceGame.Controller
 		protected override void Draw(GameTime gameTime)
 		{
 			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-			//TODO: Add your drawing code here
+			spriteBatch.Begin();
+			player.Draw(spriteBatch);
+			spriteBatch.End();
 
 			base.Draw(gameTime);
 		}
