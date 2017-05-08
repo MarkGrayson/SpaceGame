@@ -3,18 +3,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Shooter;
+using SpaceGame.Model;
+using SpaceGame;
 
 namespace SpaceGame.Controller
 {
-	/// <summary>
-	/// This is the main type for your game.
-	/// </summary>
 public class Xbox : Microsoft.Xna.Framework.Game
 	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
-		Player player;
+		private Player player;
 
 		public Xbox()
 		{
@@ -44,7 +42,7 @@ public class Xbox : Microsoft.Xna.Framework.Game
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
       		Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
-			player.Initialize(Content.Load<Texture2D>("player"), playerPosition);
+			player.Initialize(Content.Load<Texture2D>("Animation/Deadpool"), playerPosition);
 		}
 
 		/// <summary>
@@ -54,8 +52,6 @@ public class Xbox : Microsoft.Xna.Framework.Game
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
-			// For Mobile devices, this logic will close the Game when the Back button is pressed
-			// Exit() is obsolete on iOS
 #if !__IOS__ && !__TVOS__
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
