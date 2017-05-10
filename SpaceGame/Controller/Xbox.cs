@@ -8,16 +8,52 @@ using SpaceGame;
 
 namespace SpaceGame.Controller
 {
-public class Xbox : Microsoft.Xna.Framework.Game
+	public class Xbox : Microsoft.Xna.Framework.Game
 	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 		private Player player;
 
+		private KeyboardState currentKeyboardState;
+		private KeyboardState previousKeyboardState;
+		private GamePadState currentGamePadState;
+		private GamePadState previousGamePadState;
+		private float playerMoveSpeed;
+
 		public Xbox()
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
+		}
+
+		private void UpdatePlayer(GameTime gameTime)
+		{
+
+			// Get Thumbstick Controls
+			player.Position.X += currentGamePadState.ThumbSticks.Left.X * playerMoveSpeed;
+			player.Position.Y -= currentGamePadState.ThumbSticks.Left.Y * playerMoveSpeed;
+
+			// Use the Keyboard / Dpad
+			if (currentKeyboardState.IsKeyDown(Keys.Left) || currentGamePadState.DPad.Left == ButtonState.Pressed)
+			{
+				player.Position.X -= playerMoveSpeed;
+			}
+			if (currentKeyboardState.IsKeyDown(Keys.Right) || currentGamePadState.DPad.Right == ButtonState.Pressed)
+			{
+				player.Position.X += playerMoveSpeed;
+			}
+			if (currentKeyboardState.IsKeyDown(Keys.Up) || currentGamePadState.DPad.Up == ButtonState.Pressed)
+			{
+				player.Position.Y -= playerMoveSpeed;
+			}
+			if (currentKeyboardState.IsKeyDown(Keys.Down) || currentGamePadState.DPad.Down == ButtonState.Pressed)
+			{
+				player.Position.Y += playerMoveSpeed;
+			}
+
+			// Make sure that the player does not go out of bounds
+			player.Position.X = MathHelper.Clamp(player.Position.X, 0, GraphicsDevice.Viewport.Width - player.Width);
+			player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, GraphicsDevice.Viewport.Height - player.Height);
 		}
 
 		/// <summary>
@@ -29,7 +65,7 @@ public class Xbox : Microsoft.Xna.Framework.Game
 		protected override void Initialize()
 		{
 			player = new Player();
-
+			playerMoveSpeed = 8.0f;
 			base.Initialize();
 		}
 
@@ -41,7 +77,7 @@ public class Xbox : Microsoft.Xna.Framework.Game
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-      		Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
+			Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
 			player.Initialize(Content.Load<Texture2D>("Animation/Deadpool"), playerPosition);
 		}
 
@@ -56,7 +92,17 @@ public class Xbox : Microsoft.Xna.Framework.Game
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
 #endif
+			// Save the previous state of the keyboard and game pad so we can determinesingle key/button presses
+			previousGamePadState = currentGamePadState;
+			previousKeyboardState = currentKeyboardState;
 
+			// Read the current state of the keyboard and gamepad and store it
+			currentKeyboardState = Keyboard.GetState();
+			currentGamePadState = GamePad.GetState(PlayerIndex.One);
+
+
+			//Update the player
+			UpdatePlayer(gameTime);
 			// TODO: Add your update logic here
 
 			base.Update(gameTime);

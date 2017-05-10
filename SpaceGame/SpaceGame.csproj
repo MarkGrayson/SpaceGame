@@ -41,7 +41,7 @@
     <Compile Include="Controller\Xbox.cs" />
     <Compile Include="Controller\Program.cs" />
     <Compile Include="Model\Player.cs" />
-    <Compile Include="View\EmptyCSharpFile.cs" />
+    <Compile Include="View\Animation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
