@@ -9,46 +9,46 @@ namespace SpaceGame
 		public Enemy()
 		{
 // Animation representing the enemy
-public Animation enemyAnimation;
-public Animation EnemyAnimation
-{
-	get { return enemyAnimation; }
-	set { enemyAnimation = value; }
-}
+		public Animation enemyAnimation;
+		public Animation EnemyAnimation
+		{
+			get { return enemyAnimation; }
+			set { enemyAnimation = value; }
+		}
 
-// The position of the enemy ship relative to the top left corner of the screen
-public Vector2 Position;
+		// The position of the enemy ship relative to the top left corner of the screen
+		public Vector2 Position;
 
-// The state of the Enemy Ship
-private bool active;
-public bool Active
-{
-	get { return active; }
-	set { active = value; }
-}
+		// The state of the Enemy Ship
+		private bool active;
+		public bool Active
+		{
+			get { return active; }
+			set { active = value; }
+		}
 
-// The hit points of the enemy, if this goes to zero the enemy dies
-private int health;
-public int Health
-{
-	get { return health; }
-	set { health = value; }
-}
+		// The hit points of the enemy, if this goes to zero the enemy dies
+		private int health;
+		public int Health
+		{
+			get { return health; }
+			set { health = value; }
+		}
 
-// The amount of damage the enemy inflicts on the player ship
-private int damage;
-public int Damage
-{
-	get { return damage; }
-	set { damage = value; }
-}
+		// The amount of damage the enemy inflicts on the player ship
+		private int damage;
+		public int Damage
+		{
+			get { return damage; }
+			set { damage = value; }
+		}
 
-// The amount of score the enemy will give to the player
-private int scoreValue;
-public int ScoreValue;
+		// The amount of score the enemy will give to the player
+		private int scoreValue;
+		public int ScoreValue;
 {
-    get { return scoreValue; } 
-    set { scoreValue = value; } 
+    get { return scoreValue; }
+	set { scoreValue = value; } 
 }
 
 // Get the width of the enemy ship
@@ -105,12 +105,12 @@ public void Update(GameTime gameTime)
 	enemyAnimation.Update(gameTime);
 
 	// If the enemy is past the screen or its health reaches 0 then deactivate it
-	if (Position.X< -Width || Health <= 0)
-    {
-        // By setting the Active flag to false, the game will remove this object from the
-        // active game list
-        Active = false;
-    }
+	if (Position.X < -Width || Health <= 0)
+	{
+		// By setting the Active flag to false, the game will remove this object from the
+		// active game list
+		Active = false;
+	}
 }
 
 public void Draw(SpriteBatch spriteBatch)
@@ -121,4 +121,3 @@ public void Draw(SpriteBatch spriteBatch)
 
 		}
 	}
-}
