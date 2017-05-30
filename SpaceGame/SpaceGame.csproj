@@ -43,6 +43,7 @@
     <Compile Include="Model\Player.cs" />
     <Compile Include="View\Animation.cs" />
     <Compile Include="Model\Enemy.cs" />
+    <Compile Include="View\ParallaxingBackgrounds.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

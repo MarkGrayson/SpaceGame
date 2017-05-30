@@ -1,11 +1,12 @@
 ﻿<Properties StartupConfiguration="{B7CC11B8-1E2B-4904-A0E8-032FD95D4FF9}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SpaceGame/Controller/Xbox.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SpaceGame/View/ParallaxingBackgrounds.cs">
     <Files>
-      <File FileName="SpaceGame/Controller/Xbox.cs" Line="28" Column="46" />
+      <File FileName="SpaceGame/Controller/Xbox.cs" Line="173" Column="4" />
       <File FileName="SpaceGame/Controller/Program.cs" Line="11" Column="7" />
       <File FileName="SpaceGame/Model/Player.cs" Line="26" Column="27" />
       <File FileName="SpaceGame/View/Animation.cs" Line="89" Column="6" />
       <File FileName="SpaceGame/Model/Enemy.cs" Line="123" Column="3" />
+      <File FileName="SpaceGame/View/ParallaxingBackgrounds.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
