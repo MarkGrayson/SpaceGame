@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceGame.View;
 
 namespace SpaceGame
 {
 	public class Enemy
 	{
-		public Enemy()
-		{
+		
 // Animation representing the enemy
 		public Animation enemyAnimation;
 		public Animation EnemyAnimation
@@ -45,7 +45,7 @@ namespace SpaceGame
 
 		// The amount of score the enemy will give to the player
 		private int scoreValue;
-		public int ScoreValue;
+		public int ScoreValue
 {
     get { return scoreValue; }
 	set { scoreValue = value; } 

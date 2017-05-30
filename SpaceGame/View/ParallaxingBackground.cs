@@ -1,11 +1,14 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+
 namespace SpaceGame
 {
-	public class ParallaxingBackgrounds
+	public class ParallaxingBackground
 	{
 
-		public ParallaxingBackgrounds()
-		{
+
 // The image representing the parallaxing background
 		private Texture2D texture;
 
@@ -17,7 +20,7 @@ namespace SpaceGame
 		public void Initialize(ContentManager content, String texturePath, int screenWidth, int speed)
 		{
 			// Load the background texture we will be using
-			texture = content.Load(texturePath);
+				texture = content.Load<Texture2D>("Texture/background");
 
 			// Set the speed of the background
 			this.speed = speed;
@@ -64,8 +67,8 @@ namespace SpaceGame
 		}
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			for (int i = 0; i i < positions.Length; i++)
-      {
+			for (int i = 0; i < positions.Length; i++)
+      		{
 				spriteBatch.Draw(texture, positions[i], Color.White);
 			}
 		}
