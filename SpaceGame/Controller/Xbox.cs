@@ -67,7 +67,10 @@ namespace SpaceGame.Controller
 		// The music played during gameplay
 		private Song gameplayMusic;
 
-
+		//Number that holds the player score
+		private int score;
+		// The font used to display UI elements
+		private SpriteFont font;
 
 
 		public Xbox()
@@ -102,6 +105,8 @@ namespace SpaceGame.Controller
 
 		private void UpdateEnemies(GameTime gameTime)
 		{
+			//Add to the player's score
+			score += enemies[i].Value;
 
 			// Spawn a new enemy enemy every 1.5 seconds
 			if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
@@ -141,6 +146,12 @@ namespace SpaceGame.Controller
 			// Get Thumbstick Controls
 			player.Position.X += currentGamePadState.ThumbSticks.Left.X * playerMoveSpeed;
 			player.Position.Y -= currentGamePadState.ThumbSticks.Left.Y * playerMoveSpeed;
+			// reset score if player health goes to zero
+if (player.Health <= 0)
+{
+    player.Health = 100;
+    score = 0;
+}
 
 			// Use the Keyboard / Dpad
 			if (currentKeyboardState.IsKeyDown(Keys.Left) || currentGamePadState.DPad.Left == ButtonState.Pressed)
@@ -213,6 +224,9 @@ namespace SpaceGame.Controller
 			// Set the laser to fire every quarter second
 			fireTime = TimeSpan.FromSeconds(.15f);
 
+			//Set player's score to zero
+			score = 0;
+
 			base.Initialize();
 		}
 
@@ -222,6 +236,10 @@ namespace SpaceGame.Controller
 		/// </summary>
 		protected override void LoadContent()
 		{
+
+			// Load the score font
+			font = Content.Load("Font/gameFont");
+
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
