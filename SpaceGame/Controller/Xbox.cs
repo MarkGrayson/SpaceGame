@@ -58,6 +58,9 @@ namespace SpaceGame.Controller
 		private Texture2D explosionTexture;
 		private List<Animation> explosions;
 
+private Texture2D projectileTexture;
+		private List<Projectile> projectiles;
+
 		// The sound that is played when a laser is fired
 		private SoundEffect laserSound;
 
@@ -103,37 +106,35 @@ namespace SpaceGame.Controller
 			enemies.Add(enemy);
 		}
 
-		private void UpdateEnemies(GameTime gameTime)
+private void UpdateEnemies(GameTime gameTime)
+{
+
+	// Spawn a new enemy enemy every 1.5 seconds
+	if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
+	{
+		previousSpawnTime = gameTime.TotalGameTime;
+
+		// Add an Enemy
+		AddEnemy();
+	}
+
+	// Update the Enemies
+	for (int i = enemies.Count - 1; i >= 0; i--)
+	{
+		enemies[i].Update(gameTime);
+
+		if (enemies[i].Active == false)
 		{
-			//Add to the player's score
-			score += enemies[i].Value;
-
-			// Spawn a new enemy enemy every 1.5 seconds
-			if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
+			if (enemies[i].Health <= 0)
 			{
-				previousSpawnTime = gameTime.TotalGameTime;
-
-				// Add an Enemy
-				AddEnemy();
+				// Add an explosion
+				AddExplosion(enemies[i].Position);
+				enemies.RemoveAt(i);
 			}
-
-			// Update the Enemies
-			for (int i = enemies.Count - 1; i >= 0; i--)
-			{
-				enemies[i].Update(gameTime);
-
-				if (enemies[i].Active == false)
-				{
-					if (enemies[i].Health <= 0)
-					{
-						// Add an explosion
-						AddExplosion(enemies[i].Position);
-						enemies.RemoveAt(i);
-					}
-				}
-			}
-			// Play the explosion sound
-			explosionSound.Play();
+		}
+	}
+	// Play the explosion sound
+	explosionSound.Play();
 
 
 
@@ -147,11 +148,11 @@ namespace SpaceGame.Controller
 			player.Position.X += currentGamePadState.ThumbSticks.Left.X * playerMoveSpeed;
 			player.Position.Y -= currentGamePadState.ThumbSticks.Left.Y * playerMoveSpeed;
 			// reset score if player health goes to zero
-if (player.Health <= 0)
-{
-    player.Health = 100;
-    score = 0;
-}
+			if (player.Health <= 0)
+			{
+				player.Health = 100;
+				score = 0;
+			}
 
 			// Use the Keyboard / Dpad
 			if (currentKeyboardState.IsKeyDown(Keys.Left) || currentGamePadState.DPad.Left == ButtonState.Pressed)
@@ -238,7 +239,7 @@ if (player.Health <= 0)
 		{
 
 			// Load the score font
-			font = Content.Load("Font/gameFont");
+			font = Content.Load<Texture2D>("Font/gameFont");
 
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -256,7 +257,7 @@ if (player.Health <= 0)
 			// Start the music right away
 			PlayMusic(gameplayMusic);
 
-			player.Initialize(Content.Load<Texture2D>("Texture/Penguin"), playerPosition);
+			player.Initialize(Content.Load<Texture2D>("Texture/Deadpool"), playerPosition);
 
 			// Load the parallaxing background
 			bgLayer1.Initialize(Content, "Texture/bgLayer1", GraphicsDevice.Viewport.Width, -1);
@@ -336,6 +337,11 @@ if (player.Health <= 0)
 
 			//TODO: Add your drawing code here
 
+			// Draw the score
+			spriteBatch.DrawString(font, "score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
+			// Draw the player health
+			spriteBatch.DrawString(font, "health: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), Color.White);
+
 			// Update the collision
 			UpdateCollision();
 
@@ -411,8 +417,8 @@ if (player.Health <= 0)
 				for (int j = 0; j < enemies.Count; j++)
 				{
 					// Create the rectangles we need to determine if we collided with each other
-					rectangle1 = new Rectangle((int)projectiles[i].position.X - projectiles[i].Width / 2, (int)projectiles[i].position.Y -
-			 projectiles[i].Height / 2, projectiles[i].Width, projectiles[i].Height);
+					rectangle1 = new Rectangle((int)projectiles[i].Position.X - projectiles[i].Width / 2, (int)projectiles[i].Position.Y -
+			 		projectiles[i].Height / 2, projectiles[i].Width, projectiles[i].Height);
 
 					rectangle2 = new Rectangle((int)enemies[j].Position.X - enemies[j].Width / 2, (int)enemies[j].Position.Y - enemies[j].Height / 2, enemies[j].Width, enemies[j].Height);
 
