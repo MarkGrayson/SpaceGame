@@ -130,11 +130,13 @@ namespace SpaceGame.Controller
 						// Add an explosion
 						AddExplosion(enemies[i].Position);
 						enemies.RemoveAt(i);
+
+						// Play the explosion sound
+						explosionSound.Play();
 					}
 				}
 			}
-			// Play the explosion sound
-			explosionSound.Play();
+
 
 
 
@@ -184,9 +186,11 @@ namespace SpaceGame.Controller
 
 				// Add the projectile, but add it to the front and center of the player
 				AddProjectile(player.Position + new Vector2(player.Width / 2, 0));
+
+				// Play the laser sound
+				laserSound.Play();
 			}
-			// Play the laser sound
-			laserSound.Play();
+
 
 		}
 
@@ -244,8 +248,7 @@ namespace SpaceGame.Controller
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			// Load the player resources 
-			Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
+
 
 			// Load the music
 			gameplayMusic = Content.Load<Song>("Sound/gameMusic");
@@ -257,20 +260,28 @@ namespace SpaceGame.Controller
 			// Start the music right away
 			PlayMusic(gameplayMusic);
 
-			player.Initialize(Content.Load<Animation>("Texture/Deadpool"), playerPosition);
+			Animation playerAnimation = new Animation();
+			Texture2D playerTexture = Content.Load<Texture2D>("Animation/Deadpool");
+			playerAnimation.Initialize(playerTexture, Vector2.Zero, 100, 100, 2, 50, Color.White, 1f, true);
+
+
+
+			// Load the player resources 
+			Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
+			player.Initialize(playerAnimation, playerPosition);
 
 			// Load the parallaxing background
 			bgLayer1.Initialize(Content, "Texture/bgLayer1", GraphicsDevice.Viewport.Width, -1);
 			bgLayer2.Initialize(Content, "Texture/bgLayer2", GraphicsDevice.Viewport.Width, -2);
 
-			enemyTexture = Content.Load<Texture2D>("Animation/Groot");
+			enemyTexture = Content.Load<Texture2D>("Texture/Wolverine");
 
 			projectileTexture = Content.Load<Texture2D>("Texture/laser");
 
 			explosionTexture = Content.Load<Texture2D>("Animation/explosion");
 
 
-			mainBackground = Content.Load<Texture2D>("Texture/CrossTheSpectrum");
+			mainBackground = Content.Load<Texture2D>("Texture/HarambeHeaven");
 
 
 
@@ -345,6 +356,9 @@ namespace SpaceGame.Controller
 			// Update the collision
 			UpdateCollision();
 
+			// Draw the Player 
+			player.Draw(spriteBatch);
+
 			spriteBatch.Draw(mainBackground, Vector2.Zero, Color.White);
 
 			// Draw the moving background
@@ -369,8 +383,6 @@ namespace SpaceGame.Controller
 				explosions[i].Draw(spriteBatch);
 			}
 
-			// Draw the Player 
-			player.Draw(spriteBatch);
 			// Stop drawing 
 			spriteBatch.End();
 
