@@ -58,7 +58,7 @@ namespace SpaceGame.Controller
 		private Texture2D explosionTexture;
 		private List<Animation> explosions;
 
-private Texture2D projectileTexture;
+		private Texture2D projectileTexture;
 		private List<Projectile> projectiles;
 
 		// The sound that is played when a laser is fired
@@ -106,35 +106,35 @@ private Texture2D projectileTexture;
 			enemies.Add(enemy);
 		}
 
-private void UpdateEnemies(GameTime gameTime)
-{
-
-	// Spawn a new enemy enemy every 1.5 seconds
-	if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
-	{
-		previousSpawnTime = gameTime.TotalGameTime;
-
-		// Add an Enemy
-		AddEnemy();
-	}
-
-	// Update the Enemies
-	for (int i = enemies.Count - 1; i >= 0; i--)
-	{
-		enemies[i].Update(gameTime);
-
-		if (enemies[i].Active == false)
+		private void UpdateEnemies(GameTime gameTime)
 		{
-			if (enemies[i].Health <= 0)
+
+			// Spawn a new enemy enemy every 1.5 seconds
+			if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
 			{
-				// Add an explosion
-				AddExplosion(enemies[i].Position);
-				enemies.RemoveAt(i);
+				previousSpawnTime = gameTime.TotalGameTime;
+
+				// Add an Enemy
+				AddEnemy();
 			}
-		}
-	}
-	// Play the explosion sound
-	explosionSound.Play();
+
+			// Update the Enemies
+			for (int i = enemies.Count - 1; i >= 0; i--)
+			{
+				enemies[i].Update(gameTime);
+
+				if (enemies[i].Active == false)
+				{
+					if (enemies[i].Health <= 0)
+					{
+						// Add an explosion
+						AddExplosion(enemies[i].Position);
+						enemies.RemoveAt(i);
+					}
+				}
+			}
+			// Play the explosion sound
+			explosionSound.Play();
 
 
 
@@ -239,7 +239,7 @@ private void UpdateEnemies(GameTime gameTime)
 		{
 
 			// Load the score font
-			font = Content.Load<Texture2D>("Font/gameFont");
+			font = Content.Load<SpriteFont>("Font/gameFont");
 
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -257,7 +257,7 @@ private void UpdateEnemies(GameTime gameTime)
 			// Start the music right away
 			PlayMusic(gameplayMusic);
 
-			player.Initialize(Content.Load<Texture2D>("Texture/Deadpool"), playerPosition);
+			player.Initialize(Content.Load<Animation>("Texture/Deadpool"), playerPosition);
 
 			// Load the parallaxing background
 			bgLayer1.Initialize(Content, "Texture/bgLayer1", GraphicsDevice.Viewport.Width, -1);
