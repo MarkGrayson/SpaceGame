@@ -20,7 +20,7 @@ namespace SpaceGame
 		public void Initialize(ContentManager content, String texturePath, int screenWidth, int speed)
 		{
 			// Load the background texture we will be using
-				texture = content.Load<Texture2D>("Texture/mainbackground");
+				texture = content.Load<Texture2D>("Texture/HarambeHeaven");
 
 			// Set the speed of the background
 			this.speed = speed;

@@ -242,12 +242,11 @@ namespace SpaceGame.Controller
 		protected override void LoadContent()
 		{
 
-			// Load the score font
-			font = Content.Load<SpriteFont>("Font/gameFont");
-
-			// Create a new SpriteBatch, which can be used to draw textures.
+				// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
+			// Load the score font
+			font = Content.Load<SpriteFont>("Font/gameFont");
 
 
 			// Load the music
@@ -261,14 +260,14 @@ namespace SpaceGame.Controller
 			PlayMusic(gameplayMusic);
 
 			Animation playerAnimation = new Animation();
-			Texture2D playerTexture = Content.Load<Texture2D>("Animation/Deadpool");
-			playerAnimation.Initialize(playerTexture, Vector2.Zero, 100, 100, 2, 50, Color.White, 1f, true);
+			Texture2D playerTexture = Content.Load<Texture2D>("Texture/Deadpool");
+			playerAnimation.Initialize(playerTexture, Vector2.Zero, 53, 96, 2, 50, Color.White, 1f, true);
 
 
 
 			// Load the player resources 
 			Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
-			player.Initialize(playerAnimation, playerPosition);
+			player.Initialize(playerTexture, playerPosition);
 
 			// Load the parallaxing background
 			bgLayer1.Initialize(Content, "Texture/bgLayer1", GraphicsDevice.Viewport.Width, -1);

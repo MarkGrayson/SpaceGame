@@ -11,11 +11,11 @@ namespace SpaceGame.Model
 	{
 
 		// Animation representing the player
-		private Animation playerAnimation;
-		public Animation PlayerAnimation
+		private Texture2D playerTexture;
+		public Texture2D PlayerTexture
 		{
-			get { return playerAnimation; }
-			set { playerAnimation = value; }
+			get { return playerTexture; }
+			set { playerTexture = value; }
 		}
 
 		// Position of the Player relative to the upper left side of the screen
@@ -41,20 +41,20 @@ namespace SpaceGame.Model
 		// Get the width of the player ship
 		public int Width
 		{
-			get { return playerAnimation.FrameWidth; }
+			get { return playerTexture.Width; }
 		}
 
 		// Get the height of the player ship
 		public int Height
 		{
-			get { return playerAnimation.FrameHeight; }
+			get { return playerTexture.Height; }
 		}
 
 
 		// Initialize the player
-		public void Initialize(Animation animation, Vector2 position)
+		public void Initialize(Texture2D texture, Vector2 position)
 		{
-			playerAnimation = animation;
+			playerTexture = texture;
 
 			// Set the starting position of the player around the middle of the screen and to the back
 			Position = position;
@@ -65,18 +65,10 @@ namespace SpaceGame.Model
 			// Set the player health
 			Health = 100;
 		}
-		// Update the player animation
-		public void Update(GameTime gameTime)
-		{
-			playerAnimation.Position = Position;
-			playerAnimation.Update(gameTime);
-		}
-
-
 		// Draw the player
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			playerAnimation.Draw(spriteBatch);
+			spriteBatch.Draw(PlayerTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 		}
 
 	}
